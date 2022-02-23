@@ -6,11 +6,11 @@ import {faEdit} from "@fortawesome/free-solid-svg-icons";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import TodoList from "./TodoList";
 
-const TodoForm = ({addTodo, allTodo}) => {
+const TodoForm = ({addTodo, allTodo,todoBeingUpdated,editTodo,setTodoBeingUpdated}) => {
 
     //Hooks
-
-    const [objective, setObjective] = useState({
+    console.log(todoBeingUpdated)
+    const [todo, setTodo] = useState({
         id: '',
         completed: false,
         objectif: ''
@@ -19,19 +19,20 @@ const TodoForm = ({addTodo, allTodo}) => {
     //Fonction
 
     const handleChangeInput = (e) => {
-        setObjective({...objective, objectif: e.target.value})
+        setTodoBeingUpdated({...todo, objectif: e.target.value})
+        setTodo({...todo, objectif: e.target.value})
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addTodo({...objective, id: uuidv4()})
-        setObjective({...objective, objectif: ''})
+        addTodo({...todo, id: uuidv4()})
+        setTodo({...todo, objectif: ''})
     }
 
     return (
         <form onSubmit={handleSubmit}>
             <h1 className="title-objectif">Let's write your objectif for today ✨</h1>
-            <input className="input-todo" placeholder="todo" value={objective.objectif} onChange={handleChangeInput}/>
+            <input className="input-todo" placeholder="Type a todo..." value={todoBeingUpdated.objectif ? todoBeingUpdated.objectif : todo.objectif} onChange={handleChangeInput}/>
             <button className="btn-add">add</button>
         </form>
     );
